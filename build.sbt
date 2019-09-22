@@ -4,7 +4,7 @@
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
   .settings(
-    name := "spark-aggregator",
+    name := "spark-stream-to-stream-join",
     test in Test := {
       val _ = (g8Test in Test).toTask("").value
     },
