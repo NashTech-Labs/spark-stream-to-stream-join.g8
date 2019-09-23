@@ -109,7 +109,7 @@ class StreamJoinSpec extends WordSpec with EmbeddedKafka {
 
 
         val query =
-          joinedDef.select( "ImageId", "timestamp", "nearest" )
+          joinedDef.select("ImageId", "timestamp", "nearest")
             .writeStream
             .outputMode("Append")
             .option("truncate", "false")
@@ -121,20 +121,17 @@ class StreamJoinSpec extends WordSpec with EmbeddedKafka {
 
         //Generate 1,000 Image data with a velocity of 1 Record / Sec
         Future {
-          publishImagesToKafka(1, 1000)
+          publishImagesToKafka(1, 10)
         }
 
         //Generate 10,000 Gps Data with a velocity of 10 Records / Sec
         Future {
-          publishGPSDataToKafka(1, 10000)
+          publishGPSDataToKafka(1, 100)
         }
 
-        query.awaitTermination()
-
-        implicit val deserializer = new serialization.StringDeserializer()
-        val ret = consumeFirstMessageFrom("gpssource")
+        query.awaitTermination(10000)
       }
-
+      true
     }
 
   }
