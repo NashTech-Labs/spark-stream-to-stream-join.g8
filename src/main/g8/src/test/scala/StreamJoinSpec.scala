@@ -129,7 +129,7 @@ class StreamJoinSpec extends WordSpec with EmbeddedKafka {
           publishGPSDataToKafka(1, 100)
         }
 
-        query.awaitTermination(10000)
+        query.awaitTermination(100000)
       }
       true
     }

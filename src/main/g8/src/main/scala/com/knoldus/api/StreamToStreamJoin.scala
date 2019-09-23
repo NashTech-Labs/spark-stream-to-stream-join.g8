@@ -15,7 +15,7 @@ class StreamToStreamJoin(spark: SparkSession) {
       expr(
         s"""
             cameraId = gpscameraId AND
-            abs(time_in_milliseconds(timestamp) - time_in_milliseconds(gpsTimestamp)) <= $win
+            abs(time_in_milliseconds(timestamp) - time_in_milliseconds(gpsTimestamp)) <= \$win
          """.stripMargin)
     ).selectExpr("ImageId", "timestamp", "gpsTimestamp", "abs(time_in_milliseconds(gpsTimestamp) - time_in_milliseconds(timestamp)) as diff")
       /*.withWatermark("timestamp", "1 seconds")*/
